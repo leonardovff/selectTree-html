@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select Html WithRelationship</title>
+</head>
+<body>
+<label>Select Master</label>
+<select>
+	<option selected="on" value='all'>Todos</option>
+	<option value="1">Primeiro 1</option>
+	<option value="2">Primeiro 2</option>
+	<option value="3">Primeiro 3</option>
+	<option value="4">Primeiro 4</option>
+	<option value="5">Primeiro 5</option>
+	<option value="6">Primeiro 6</option>
+	<option value="7">Primeiro 7</option>
+</select>
+<br>
+<label>Select Father 1</label>
+<select>
+    <option selected="on" value='all'>Segundo 1</option>
+	<option data-sp-cod="3" value="2">Segundo 2</option>
+	<option data-sp-cod="1" value="3">Segundo 3</option>
+	<option data-sp-cod="1" value="4">Segundo 4</option>
+	<option data-sp-cod="1" value="5">Segundo 5</option>
+	<option data-sp-cod="5o" value="5">Segundo 5</option>
+	<option data-sp-cod="5,6" value="5">Segundo 6</option>
+	<option data-sp-cod="1" value="7">Segundo 7</option>
+	<option data-sp-cod="2" value="8">Segundo 8</option>
+	<option data-sp-cod="4" value="8">Segundo 9</option>
+	<option data-sp-cod="5" value="10">Segundo 10</option>
+	<option data-sp-cod="6" value="11">Segundo 11</option>
+	<option data-sp-cod="7" value="12">Segundo 12</option>
+	<option data-sp-cod="3" value="13">Segundo 13s</option>
+</select>
+<br>
+<label>Select Father 2</label>
+<select>
+    <option selected="on" value='all'>Terceiro 1</option>
+	<option data-sp-cod="3" value="1">Terceiro 2</option>
+	<option data-sp-cod="1" value="2">Terceiro 3</option>
+	<option data-sp-cod="1" value="3">Terceiro 4</option>
+	<option data-sp-cod="1" value="4">Terceiro 5</option>
+	<option data-sp-cod="1" value="5">Terceiro 6</option>
+	<option data-sp-cod="1" value="6">Terceiro 7</option>
+	<option data-sp-cod="2" value="7">Terceiro 8</option>
+	<option data-sp-cod="4" value="8">Terceiro 9</option>
+	<option data-sp-cod="5" value="9">Terceiro 10</option>
+	<option data-sp-cod="6" value="10">Terceiro 11</option>
+	<option data-sp-cod="7" value="11">Terceiro 12</option>
+	<option data-sp-cod="3" value="12">Terceiro 13s</option>
+</select>
+<br>
+<label>Select Son</label>
+<select class="teste">
+    <option selected="on" value='all'>Quarto 1</option>
+	<option data-sp-cod="3" value="1">Quarto 2</option>
+	<option data-sp-cod="1" value="2">Quarto 3</option>
+	<option data-sp-cod="1" value="3">Quarto 4</option>
+	<option data-sp-cod="1" value="4">Quarto 5</option>
+	<option data-sp-cod="1" value="5">Quarto 6</option>
+	<option data-sp-cod="1" data-em-cod="2" value="6">Quarto 7</option>
+	<option data-sp-cod="2" value="7">Quarto 8</option>
+	<option data-sp-cod="4" value="8">Quarto 9</option>
+	<option data-sp-cod="5" value="9">Quarto 10</option>
+	<option data-sp-cod="6" value="10">Quarto 11</option>
+	<option data-sp-cod="7" value="11">Quarto 12</option>
+	<option data-sp-cod="3" value="12">Quarto 13</option>
+</select>
+<script type="text/javascript" src="JS/shrelational.js"></script>
+</body>
+</html>
