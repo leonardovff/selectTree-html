@@ -1,5 +1,6 @@
 var selectTree = (function(){
 	'use strict'
+	var teste = "emCod"
 	// selectors tree dom 
 	// get.item("seletor",fatherDom) 
 	// get.all("seletor",fatherDom) 
@@ -20,14 +21,11 @@ var selectTree = (function(){
 			arr = {};
 			for (var i = 0, lim = elOptions.length; i<lim; i++) {
 				//arr.father 
-				delete elOptions[i].dataset['codEm'];
+				delete elOptions[i].dataset[teste];
 				console.log(elOptions[i].outerHTML);
 				// return 
 			};
-		},
-		init: function(){
-
-		}
+		}	
 	}
 	//app.buildList(get.item(".teste"));
 	app.init();
