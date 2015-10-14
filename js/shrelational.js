@@ -1,10 +1,10 @@
 var selectTree = (function(){
 	'use strict'
-	var teste = "emCod"
-	// selectors tree dom 
-	// get.item("seletor",fatherDom) 
-	// get.all("seletor",fatherDom) 
-	var get = {
+	var selectTreeSelector = ".selectTree", 
+	get = {
+		// selectors tree dom 
+		// get.item("seletor",fatherDom) 
+		// get.all("seletor",fatherDom) 
 	 	item: function(el, root){
 			if(typeof(root)!="undefined") return root.querySelector(el);
 			return document.querySelector(el);
@@ -18,19 +18,36 @@ var selectTree = (function(){
 		buildList: function(son){
 			var elOptions = get.all("option",son),
 			list = [],
-			arr = {};
+			dataset = {};
 			for (var i = 0, lim = elOptions.length; i<lim; i++) {
 				//arr.father 
-				delete elOptions[i].dataset[teste];
-				console.log(elOptions[i].outerHTML);
-				// return 
+				//delete elOptions[i].dataset['codEm'];
+				//console.log(elOptions[i].outerHTML);
+
+				//PERCORRER OBJETO COM FOR IN
+				dataset = elOptions[i].dataset;
+				for (var key in dataset) if(dataset.hasOwnProperty(key)) {
+					console.log(dataset[key].split(","));
+				}
+
+				//TRANSFORMAR AS CHAVES OBJETO DATASET EM ARRAY e DPS PERCORRER
+				// arr = Object.keys(elOptions[i].dataset)
+				// for (var i = arr.length - 1; i >= 0; i--) {
+				// 	arr[i]
+				// };
 			};
-		}	
+		},
+		init: function(el){
+			var el = get.all(el);
+			for (var i = el.length - 1; i >= 0; i--) {
+				app.buildList(el[i]);
+			};
+
+		}
 	}
-	//app.buildList(get.item(".teste"));
-	app.init();
+	app.init(selectTreeSelector);
 	return function(eu){
-		console.log(eu);
+		//console.log(eu);
 	}
 }());
 selectTree("eu"); 
