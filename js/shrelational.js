@@ -14,30 +14,53 @@
 	},
 	selectTree = (function(el){
 		var app = {
+			list: [],
+			active: false,
+			fathers: [],
 			captureValueData: function(data){
+				var list = [];
 				data = data.split(",");
 				for (var i = data.length - 1; i >= 0; i--) {
-					console.log(data[i]);
+					list.push(data[i]);
 				};
+				return list;
 			},
-			buildList: function(select){
+			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
-				dataset = {};
+				dataset = {},
+				temp,
+				fathers = [];
 				for (var i = 0, lim = elOptions.length; i<lim; i++) {
-					//delete elOptions[i].dataset['codEm'];
-
+					temp = {};
 					//PERCORRER OBJETO DATASET
-					// dataset = Object.keys(elOptions[i].dataset)
-					// for (var i = dataset.length - 1; i >= 0; i--) {
 					dataset = elOptions[i].dataset;
+					//var keys = Object.keys(elOptions[i].dataset),key;
+					//for (var i = keys.length - 1; i >= 0; i--) {
+					//key = keys[i];
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
-						app.captureValueData(dataset[key]);
+						// IF DATA OF SELECTTREE - @data-cod | @dataCod
+						if(key.indexOf("Cod")!=-1){
+							temp[key] = app.captureValueData(dataset[key]);
+							delete dataset[key];
+							if(!app.active) app.active = true;
+							if(fathers.indexOf(key)===-1) fathers.push(key);
+						}
 					}
+					temp['value'] = elOptions[i].value; 
+					temp.html = elOptions[i].outerHTML;
+					list.push(temp);
 				};
+				app.fathers = fathers;
+				//CLEAN MEMORY
+				delete app.captureValueData;
+				return list;
 			},
 		}
-		app.buildList(el);
+		//FOR CLEAN FUNCTION LIST WITH LIST - CLEAN MEMORY
+		app.list = app.list(el);
+		if(!app.active) return 0;
+		console.log(app);
 	});
 	var el = get.all(selectTreeSelector);
 	for (var i = el.length - 1; i >= 0; i--) {
