@@ -24,6 +24,9 @@
 			list: [],
 			fathers: [],
 			el: {},
+			getValueFathers: function(){
+
+			},
 			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
@@ -40,12 +43,13 @@
 					if(valueCheck.indexOf(val)!==-1) {
 						keySearch = get.searchKey(list, 'value', val);
 					}
+					valueCheck.push(elOptions[i].value);
 					if(keySearch!==null) temp = list[keySearch]
 					//PERCORRER OBJETO DATASET
 					dataset = elOptions[i].dataset;
-					//var keys = Object.keys(elOptions[i].dataset),key;
-					//for (var i = keys.length - 1; i >= 0; i--) {
-					//key = keys[i];
+					// var keys = Object.keys(elOptions[i].dataset),key;
+					// for (var i = keys.length - 1; i >= 0; i--) {
+					// 	key = keys[i];
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
@@ -59,7 +63,6 @@
 							if(fathers.indexOf(key)===-1) fathers.push(key);
 						}
 					}
-					valueCheck.push(elOptions[i].value);
 					if(keySearch===null){
 						temp.html = elOptions[i].outerHTML;
 						list.push(temp);
@@ -69,9 +72,9 @@
 				};
 				app.fathers = fathers;
 				return list;
-			},
+			}
 		}
-		//FOR CLEAN FUNCTION LIST WITH LIST - CLEAN MEMORY
+		//FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
 		app.list = app.list(el);
 		if(!app.active) return 0;	
 		app.el = el;
