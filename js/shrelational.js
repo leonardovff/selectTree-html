@@ -14,17 +14,9 @@
 	},
 	selectTree = (function(el){
 		var app = {
-			list: [],
 			active: false,
+			list: [],
 			fathers: [],
-			captureValueData: function(data){
-				var list = [];
-				data = data.split(",");
-				for (var i = data.length - 1; i >= 0; i--) {
-					list.push(data[i]);
-				};
-				return list;
-			},
 			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
@@ -41,7 +33,7 @@
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
-							temp[key] = app.captureValueData(dataset[key]);
+							temp[key] = dataset[key].split(",");
 							delete dataset[key];
 							if(!app.active) app.active = true;
 							if(fathers.indexOf(key)===-1) fathers.push(key);
@@ -52,8 +44,6 @@
 					list.push(temp);
 				};
 				app.fathers = fathers;
-				//CLEAN MEMORY
-				delete app.captureValueData;
 				return list;
 			},
 		}
