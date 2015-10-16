@@ -66,14 +66,23 @@
 				
 			},
 			setEvents: function(){
+				var flag = true;
 				for (var i = app.fathers.length; i--;) {
 					app.fathers[i].el.addEventListener('change',function(){
 						app._updateValueFather();
 						app.buildOptions();
 					},false);
 					app.fathers[i].el.addEventListener('DOMSubtreeModified',function(){
-						app._updateValueFather();
-						app.buildOptions();
+						//EVENTO @DOMSubtreeModified É DISPARADO DUAS VEZES
+						//FLAG e SeTimeout PARA NÃO EXECUTAR DUAS VEZES
+						if(flag){ 
+							flag = false;
+							setTimeout(function(){
+								app._updateValueFather();
+								app.buildOptions();
+								flag = true;	
+							},100);
+						}
 					},false);
 				}
 			},
