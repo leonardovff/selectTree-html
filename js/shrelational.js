@@ -33,12 +33,15 @@
 				val = temp.value;
 				if(typeof(temp.dataset['shrValue'])!=="undefined"){
 					val = temp.dataset['shrValue'];
+					temp.value = val;
 				}
 				app.fathers.push({'id': key,'value': val,'el': temp});
 			},
 			_updateValueFather: function(){
-				for (var i = app.fathers.length; i--;) {
-					app._setValueFather(app.fathers[i].id);
+				var fathers = app.fathers;
+				app.fathers = [];
+				for (var i = fathers.length; i--;) {
+					app._setValueFather(fathers[i].id);
 				}
 			},
 			_filter: function(option){
@@ -47,7 +50,6 @@
 						if(typeof(option[app.fathers[i].id])==="undefined") return false;
 						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
 						if(option[app.fathers[i].id].indexOf(app.fathers[i].value)===-1) return false; 
-						console.log("entrou");
 					}
 				}
 				return true;
@@ -58,14 +60,22 @@
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
-				console.log(string);
 				app.el.innerHTML = string;
 			},
 			statusSelect: function(){
-
+				
 			},
 			setEvents: function(){
-
+				for (var i = app.fathers.length; i--;) {
+					app.fathers[i].el.addEventListener('change',function(){
+						app._updateValueFather();
+						app.buildOptions();
+					},false);
+					app.fathers[i].el.addEventListener('DOMSubtreeModified',function(){
+						app._updateValueFather();
+						app.buildOptions();
+					},false);
+				}
 			},
 			list: function(select){
 				var elOptions = get.all("option",select),
@@ -86,10 +96,10 @@
 					if(keySearch!==null) listTemp = list[keySearch]
 					//PERCORRER OBJETO DATASET
 					dataset = elOptions[i].dataset;
-					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 					// var keys = Object.keys(elOptions[i].dataset),key;
 					// for (var i = keys.length - 1; i >= 0; i--) {
 					// 	key = keys[i];
+					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF HAVE DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
 							if(keySearch!==null && key in listTemp) {
@@ -122,6 +132,6 @@
 	});
 	var el = get.all(selectTreeSelector);
 	for (var i = el.length - 1; i >= 0; i--) {
-		new selectTree(el[i]);
+		selectTree(el[i]);
 	};
 }());
