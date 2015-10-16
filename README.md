@@ -9,4 +9,4 @@ Feature de select html possuindo pais e filhos, alterando o seu conteúdo e dos 
 > - Opera 7+
 > - Safari 1+
 
-Pequenas mudanças e o suporte aumenta, esse é ambiente que tive que atender quando o código foi desenvolvido.
+OBS: Pequenas mudanças e o suporte aumenta, esse é ambiente que tive que atender quando o código foi desenvolvido.
