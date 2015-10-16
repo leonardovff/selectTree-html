@@ -1,7 +1,7 @@
 # htmlSelectRelational
 Feature de select html possuindo pais e filhos, alterando o seu conteúdo e dos filhos a depender das ações.
 > **Criador:** [Leonardo Victor](https://twitter.com/leonardovff)
-Support: 
+## Support: 
 IE9+
 CHROME 1.0+
 FIREFOX 1.0+
