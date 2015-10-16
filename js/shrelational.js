@@ -24,27 +24,34 @@
 			list: [],
 			fathers: [],
 			el: {},
-			getValueFathers: function(){
-
+			setValueFather: function(key){
+				var temp = get.item('select[data-shr-id="'+key+'"]'),
+				val = 0;
+				if(temp===null) {
+					throw "SelectTree: Father ("+key+") not found";
+				}
+				val = temp.value;
+				if(typeof(temp.dataset['shr-value'])!=="undefined")
+					val = temp.dataset['shr-value']
+				app.fathers.push({'id': key,'value': val,'el': temp});
 			},
 			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
 				dataset = {},
-				fathers = [],
 				valueCheck = [],
-				temp,
+				listTemp,
 				val = 0,
 				keySearch;
 				for (var i = 0, lim = elOptions.length; i<lim; i++) {
 					val = elOptions[i].value
-					temp = {'value': val};
+					listTemp = {'value': val};
 					keySearch = null;
 					if(valueCheck.indexOf(val)!==-1) {
 						keySearch = get.searchKey(list, 'value', val);
 					}
 					valueCheck.push(elOptions[i].value);
-					if(keySearch!==null) temp = list[keySearch]
+					if(keySearch!==null) listTemp = list[keySearch]
 					//PERCORRER OBJETO DATASET
 					dataset = elOptions[i].dataset;
 					// var keys = Object.keys(elOptions[i].dataset),key;
@@ -53,24 +60,24 @@
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
-							if(keySearch!==null && key in temp) {
-								temp[key] = temp[key].concat(dataset[key].split(","));
+							if(keySearch!==null && key in listTemp) {
+								listTemp[key] = listTemp[key].concat(dataset[key].split(","));
 							} else {
-								temp[key] = dataset[key].split(",");
+								listTemp[key] = dataset[key].split(",");
 							}
 							delete dataset[key];
 							if(!app.active) app.active = true;
-							if(fathers.indexOf(key)===-1) fathers.push(key);
+							if(get.searchKey(app.fathers,'id',key)===null)
+								app.setValueFather(key);
 						}
 					}
 					if(keySearch===null){
-						temp.html = elOptions[i].outerHTML;
-						list.push(temp);
+						listTemp.html = elOptions[i].outerHTML;
+						list.push(listTemp);
 					} else {
-						list[keySearch] = temp;
+						list[keySearch] = listTemp;
 					}
 				};
-				app.fathers = fathers;
 				return list;
 			}
 		}
