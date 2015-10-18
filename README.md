@@ -51,7 +51,6 @@ Um filho pode ter infinitos pais, um pai pode ter infinitos filhos.
 Sem limite de selects.
 
 Caso deseje que um filho seja ligado a mais de um valor do pai, tem duas maneiras.
-
 Separando por virgula o valor:
 ```html
 <option data-@alguma-coisa-cod="5,6" value="5">Segundo 5</option>
@@ -69,6 +68,12 @@ Para deixar um option selecionado, pode ser usado tanto o padrão selected na op
 <option selected="on">Segundo 5</option>
 ```
 Como também pode setar o valor da seleciona no data-shr-value="@value" no select:
+```html
+<select class="selectTree" data-shr-value="@valueOption">
+```
+
+
+Caso queira uma opção para que liste todas as options do filho:
 ```html
 <select class="selectTree" data-shr-value="@valueOption">
 ```
