@@ -21,8 +21,8 @@ OBS: Pequenas mudanças e o suporte aumenta, esse é ambiente que tive que atend
 3: Adicone nos selects pais, o data-shr-id="algumCoisaCod". 
 
 ```html
-<select data-shr-id="emCod" class="selectTree">
-<select data-shr-id="spCod" class="selectTree">
+<select data-shr-id="@algumaCoisaCod" class="selectTree">
+<select data-shr-id="@algumaCoisa2Cod" class="selectTree">
 ```
 Sempre terminando em "Cod" no final, esse valor tem que ser unico a esse select.
 4: Adicione a refencia aos pais nas options dos selects filhos:
