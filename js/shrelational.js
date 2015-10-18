@@ -26,7 +26,8 @@
 			el: {},
 			value: null,
 			empty: "Sem itens para os pai(s) selecionados", // DEFAULT MESSAGE EMPTY
-			_setValueFather: function(key){
+			beforeOptions: "", //DEFAULT AFTER OPTION
+			_getValueFather: function(key){
 				var temp = get.item('select[data-shr-id="'+key+'"]'),
 				val;
 				if(temp===null) {
@@ -39,7 +40,7 @@
 				var fathers = app.fathers;
 				app.fathers = [];
 				for (var i = fathers.length; i--;) {
-					app._setValueFather(fathers[i].id);
+					app._getValueFather(fathers[i].id);
 				}
 			},
 			_filter: function(option){
@@ -58,6 +59,7 @@
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
+				string = app.beforeOptions.html + string;
 				if(string==="") 
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
 				app.el.innerHTML = string;
@@ -91,9 +93,6 @@
 					},false);
 				}
 			},
-			clearValue: function(){
-				if(app.el.dataset.shrValue) delete app.el.dataset.shrValue;
-			},
 			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
@@ -126,7 +125,7 @@
 							delete dataset[key];
 							if(!app.active) app.active = true;
 							if(get.searchKey(app.fathers,'id',key)===null)
-								app._setValueFather(key);
+								app._getValueFather(key);
 						}
 					}
 
@@ -136,12 +135,16 @@
 						if(app.value==null) app.value = val;
 						if(app.value!=val) elOptions[i].removeAttribute('selected');
 					} 
-					
-					if(keySearch===null){
-						listTemp.html = elOptions[i].outerHTML;
-						list.push(listTemp);
+					listTemp.html = elOptions[i].outerHTML;
+
+					if(val === "all"){
+						app.beforeOptions = listTemp;
 					} else {
-						list[keySearch] = listTemp;
+						if(keySearch===null){
+							list.push(listTemp);
+						} else {
+							list[keySearch] = listTemp;
+						}
 					}
 				};
 				return list;
