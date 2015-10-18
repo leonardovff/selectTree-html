@@ -1,6 +1,7 @@
 # htmlSelectRelational
 Feature de select html possuindo pais e filhos, alterando o seu conteúdo e dos filhos a depender das ações.
-[see the demo](http://leonardovff.github.io/htmlSelectTree/)
+
+[see the demo | veja exemplo](http://leonardovff.github.io/htmlSelectTree/)
 > **Criador:** [Leonardo Victor](https://twitter.com/leonardovff)
 
 ## Suporte: 
