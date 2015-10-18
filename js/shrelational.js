@@ -24,6 +24,7 @@
 			list: [],
 			fathers: [],
 			el: {},
+			empty: "",
 			_setValueFather: function(key){
 				var temp = get.item('select[data-shr-id="'+key+'"]'),
 				val;
@@ -60,10 +61,13 @@
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
+				if(string==="") 
+					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
 				app.el.innerHTML = string;
 			},
 			statusSelect: function(){
-				
+				var dataset = app.el.dataset;
+				app.empty = dataset.shrEmpty ? "Sem itens para os pai(s) selecionados" : dataset.shrEmpty;
 			},
 			setEvents: function(){
 				var flag = true;
@@ -135,6 +139,7 @@
 		app.list = app.list(el); //FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
 		if(!app.active) return 0;	
 		app.el = el;
+		app.statusSelect();
 		app.buildOptions();
 		app.setEvents();
 		console.dir(app);
