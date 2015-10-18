@@ -24,7 +24,8 @@
 			list: [],
 			fathers: [],
 			el: {},
-			empty: "",
+			value: null,
+			empty: "Sem itens para os pai(s) selecionados", // DEFAULT MESSAGE EMPTY
 			_setValueFather: function(key){
 				var temp = get.item('select[data-shr-id="'+key+'"]'),
 				val;
@@ -32,10 +33,6 @@
 					throw "SelectTree: Father ("+key+") not found";
 				}
 				val = temp.value;
-				if(typeof(temp.dataset['shrValue'])!=="undefined"){
-					val = temp.dataset['shrValue'];
-					temp.value = val;
-				}
 				app.fathers.push({'id': key,'value': val,'el': temp});
 			},
 			_updateValueFather: function(){
@@ -67,7 +64,11 @@
 			},
 			statusSelect: function(){
 				var dataset = app.el.dataset;
-				app.empty = dataset.shrEmpty ? "Sem itens para os pai(s) selecionados" : dataset.shrEmpty;
+				if(dataset.shrValue){
+					app.value = dataset['shrValue'];
+					delete dataset['shrValue'];
+				} 
+				if(dataset.shrEmpty) app.empty = dataset.shrEmpty;
 			},
 			setEvents: function(){
 				var flag = true;
@@ -90,6 +91,9 @@
 					},false);
 				}
 			},
+			clearValue: function(){
+				if(app.el.dataset.shrValue) delete app.el.dataset.shrValue;
+			},
 			list: function(select){
 				var elOptions = get.all("option",select),
 				list = [],
@@ -101,17 +105,16 @@
 				for (var i = 0, lim = elOptions.length; i<lim; i++) {
 					val = elOptions[i].value
 					listTemp = {'value': val};
+					
 					keySearch = null;
 					if(valueCheck.indexOf(val)!==-1) {
 						keySearch = get.searchKey(list, 'value', val);
 					}
 					valueCheck.push(elOptions[i].value);
 					if(keySearch!==null) listTemp = list[keySearch]
+
 					//PERCORRER OBJETO DATASET
 					dataset = elOptions[i].dataset;
-					// var keys = Object.keys(elOptions[i].dataset),key;
-					// for (var i = keys.length - 1; i >= 0; i--) {
-					// 	key = keys[i];
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF HAVE DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
@@ -126,6 +129,14 @@
 								app._setValueFather(key);
 						}
 					}
+
+					// SETA VALUE DEFAULT
+					if(val==app.value) elOptions[i].setAttribute('selected','on');
+					if(elOptions[i].hasAttribute('selected')){
+						if(app.value==null) app.value = val;
+						if(app.value!=val) elOptions[i].removeAttribute('selected');
+					} 
+					
 					if(keySearch===null){
 						listTemp.html = elOptions[i].outerHTML;
 						list.push(listTemp);
@@ -136,11 +147,11 @@
 				return list;
 			}
 		}
-		app.list = app.list(el); //FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
-		if(!app.active) return 0;	
 		app.el = el;
 		app.statusSelect();
+		app.list = app.list(el); //FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
 		app.buildOptions();
+		if(!app.active) return 0;	
 		app.setEvents();
 		console.dir(app);
 	});
