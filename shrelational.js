@@ -24,25 +24,23 @@
 			list: [],
 			fathers: [],
 			el: {},
-			empty: "",
-			_setValueFather: function(key){
+			value: null,
+			empty: "Sem itens para os pai(s) selecionados", // DEFAULT MESSAGE EMPTY
+			beforeOptions: "", //DEFAULT AFTER OPTION
+			_getValueFather: function(key){
 				var temp = get.item('select[data-shr-id="'+key+'"]'),
 				val;
 				if(temp===null) {
 					throw "SelectTree: Father ("+key+") not found";
 				}
 				val = temp.value;
-				if(typeof(temp.dataset['shrValue'])!=="undefined"){
-					val = temp.dataset['shrValue'];
-					temp.value = val;
-				}
 				app.fathers.push({'id': key,'value': val,'el': temp});
 			},
 			_updateValueFather: function(){
 				var fathers = app.fathers;
 				app.fathers = [];
 				for (var i = fathers.length; i--;) {
-					app._setValueFather(fathers[i].id);
+					app._getValueFather(fathers[i].id);
 				}
 			},
 			_filter: function(option){
@@ -61,13 +59,18 @@
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
+				string = app.beforeOptions.html + string;
 				if(string==="") 
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
 				app.el.innerHTML = string;
 			},
 			statusSelect: function(){
 				var dataset = app.el.dataset;
-				app.empty = dataset.shrEmpty ? "Sem itens para os pai(s) selecionados" : dataset.shrEmpty;
+				if(dataset.shrValue){
+					app.value = dataset['shrValue'];
+					delete dataset['shrValue'];
+				} 
+				if(dataset.shrEmpty) app.empty = dataset.shrEmpty;
 			},
 			setEvents: function(){
 				var flag = true;
@@ -75,14 +78,11 @@
 					app.fathers[i].el.addEventListener('change',function(){
 						app._updateValueFather();
 						app.buildOptions();
-
-							console.log("entrou2");
 					},false);
 					app.fathers[i].el.addEventListener('DOMSubtreeModified',function(){
 						//EVENTO @DOMSubtreeModified É DISPARADO DUAS VEZES
 						//FLAG e SeTimeout PARA NÃO EXECUTAR DUAS VEZES
 						if(flag){ 
-							console.log("entrou");
 							flag = false;
 							setTimeout(function(){
 								app._updateValueFather();
@@ -104,17 +104,16 @@
 				for (var i = 0, lim = elOptions.length; i<lim; i++) {
 					val = elOptions[i].value
 					listTemp = {'value': val};
+					
 					keySearch = null;
 					if(valueCheck.indexOf(val)!==-1) {
 						keySearch = get.searchKey(list, 'value', val);
 					}
 					valueCheck.push(elOptions[i].value);
 					if(keySearch!==null) listTemp = list[keySearch]
+
 					//PERCORRER OBJETO DATASET
 					dataset = elOptions[i].dataset;
-					// var keys = Object.keys(elOptions[i].dataset),key;
-					// for (var i = keys.length - 1; i >= 0; i--) {
-					// 	key = keys[i];
 					for (var key in dataset) if(dataset.hasOwnProperty(key)) {
 						// IF HAVE DATA OF SELECTTREE - @data-cod | @dataCod
 						if(key.indexOf("Cod")!=-1){
@@ -126,24 +125,36 @@
 							delete dataset[key];
 							if(!app.active) app.active = true;
 							if(get.searchKey(app.fathers,'id',key)===null)
-								app._setValueFather(key);
+								app._getValueFather(key);
 						}
 					}
-					if(keySearch===null){
-						listTemp.html = elOptions[i].outerHTML;
-						list.push(listTemp);
+
+					// SETA VALUE DEFAULT
+					if(val==app.value) elOptions[i].setAttribute('selected','on');
+					if(elOptions[i].hasAttribute('selected')){
+						if(app.value==null) app.value = val;
+						if(app.value!=val) elOptions[i].removeAttribute('selected');
+					} 
+					listTemp.html = elOptions[i].outerHTML;
+
+					if(val === "all"){
+						app.beforeOptions = listTemp;
 					} else {
-						list[keySearch] = listTemp;
+						if(keySearch===null){
+							list.push(listTemp);
+						} else {
+							list[keySearch] = listTemp;
+						}
 					}
 				};
 				return list;
 			}
 		}
-		app.list = app.list(el); //FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
-		if(!app.active) return 0;	
 		app.el = el;
 		app.statusSelect();
+		app.list = app.list(el); //FOR CLEAN FUNCTION LIST WITH ARRAY LIST - CLEAN MEMORY
 		app.buildOptions();
+		if(!app.active) return 0;	
 		app.setEvents();
 		console.dir(app);
 	});
