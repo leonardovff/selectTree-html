@@ -19,8 +19,8 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h3>
+<!-- <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a> -->
+    <h3>Examples</h3>
 <label>Select Master</label>
 <select data-shr-id="spCod" class="selectTree">
   <option selected="on" value='all'>Todos</option>
@@ -71,23 +71,86 @@
 <label>Select Son</label>
 <select class="selectTree" data-shr-empty="Sem Son para Father 2 e Master selecionados">
     <option selected="on" value='all'>Todos</option>
-  <option data-sp-cod="3" value="1">Quarto 1</option>
-  <option data-sp-cod="1" value="2">Quarto 2</option>
-  <option data-sp-cod="1" value="3">Quarto 3</option>
-  <option data-sp-cod="1" value="4">Quarto 4</option>
-  <option data-sp-cod="1" value="5">Quarto 5</option>
-  <option data-sp-cod="1" data-em-cod="2" value="6">Quarto 6</option>
-  <option data-sp-cod="2" value="7">Quarto 7</option>
-  <option data-sp-cod="4" value="8">Quarto 8</option>
-  <option data-sp-cod="5" value="9">Quarto 9</option>
-  <option data-sp-cod="6" value="10">Quarto 10</option>
-  <option data-sp-cod="7" value="11">Quarto 11</option>
-  <option data-sp-cod="3" value="12">Quarto 12</option>
+  <option data-sp-cod="3" value="1">Quatro 1</option>
+  <option data-sp-cod="1" value="2">Quatro 2</option>
+  <option data-sp-cod="1" value="3">Quatro 3</option>
+  <option data-sp-cod="1" value="4">Quatro 4</option>
+  <option data-sp-cod="1" value="5">Quatro 5</option>
+  <option data-sp-cod="1" data-em-cod="2" value="6">Quatro 6</option>
+  <option data-sp-cod="2" value="7">Quatro 7</option>
+  <option data-sp-cod="4" value="8">Quatro 8</option>
+  <option data-sp-cod="5" value="9">Quatro 9</option>
+  <option data-sp-cod="6" value="10">Quatro 10</option>
+  <option data-sp-cod="7" value="11">Quatro 11</option>
+  <option data-sp-cod="3" value="12">Quatro 12</option>
 </select>
+<!-- <label>Select Master</label>
+<select data-shr-id="masterCod" class="selectTree" data-shr-value="1">
+  <option selected="on" value='all'>Todos</option>
+  <option value="1">Primeiro 1</option>
+  <option value="2">Primeiro 2</option>
+  <option value="3" selected>Primeiro 3</option>
+  <option value="4">Primeiro 4</option>
+  <option value="5">Primeiro 5</option>
+  <option value="6">Primeiro 6</option>
+  <option value="7">Primeiro 7</option>
+</select>
+<br>
+<label>Select Father 1</label>
+<select data-shr-id="fatherCod" class="selectTree" data-shr-value="3">
+    <option selected="on" value='all'>Todos</option>
+  <option data-master-cod="3" value="2">Segundo 1</option>
+  <option data-master-cod="1" value="3">Segundo 2</option>
+  <option data-master-cod="1" value="4">Segundo 3</option>
+  <option data-master-cod="2" value="5">Segundo 4</option>
+  <option data-master-cod="5" value="5">Segundo 5</option>
+  <option data-master-cod="5,6" value="5">Segundo 5</option>
+  <option data-master-cod="1" value="7">Segundo 7</option>
+  <option data-master-cod="2" value="8">Segundo 8</option>
+  <option data-master-cod="4" value="8">Segundo 9</option>
+  <option data-master-cod="5" value="10">Segundo 10</option>
+  <option data-master-cod="6" value="11">Segundo 11</option>
+  <option data-master-cod="7" value="12">Segundo 12</option>
+  <option data-master-cod="3" value="13">Segundo 13</option>
+</select>
+<br>
+<label>Select Father 2</label>
+<select data-shr-id="fatherrCod" class="selectTree" data-shr-value="4">
+    <option selected="on" value='all'>Todos</option>
+  <option data-master-cod="3" value="1">Terceiro 1</option>
+  <option data-master-cod="1" value="2">Terceiro 2</option>
+  <option data-master-cod="1" value="3">Terceiro 3</option>
+  <option data-master-cod="1" value="4">Terceiro 4</option>
+  <option data-master-cod="1" value="5">Terceiro 5</option>
+  <option data-master-cod="1" value="6">Terceiro 6</option>
+  <option data-master-cod="2" value="7">Terceiro 7</option>
+  <option data-master-cod="4" value="8">Terceiro 8</option>
+  <option data-master-cod="5" value="9">Terceiro 9</option>
+  <option data-master-cod="6" value="10">Terceiro 10</option>
+  <option data-master-cod="7" value="11">Terceiro 11</option>
+  <option data-master-cod="3" value="12">Terceiro 12</option>
+</select>
+<br>
+<label>Select Son</label>
+<select class="selectTree" data-shr-empty="Sem Son para Father 2 e Master selecionados">
+  <option selected="on" value='all'>Todos</option>
+  <option data-father-cod="3" data-fatherr-cod="4" data-master-cod="1" value="1">Quatro 1</option>
+  <option data-father-cod="1" data-fatherr-cod="4" data-master-cod="3" value="2">Quatro 2</option>
+  <option data-father-cod="1" data-fatherr-cod="5" data-master-cod="1" value="3">Quatro 3</option>
+  <option data-father-cod="1" data-fatherr-cod="6" data-master-cod="1" value="4">Quatro 4</option>
+  <option data-father-cod="1" data-fatherr-cod="7" data-master-cod="5" value="5">Quatro 5</option>
+  <option data-father-cod="1" data-fatherr-cod="4" data-master-cod="4" value="6">Quatro 6</option>
+  <option data-father-cod="2" data-fatherr-cod="5" data-master-cod="7" value="7">Quatro 7</option>
+  <option data-father-cod="4" data-fatherr-cod="3" data-master-cod="5" value="8">Quatro 8</option>
+  <option data-father-cod="5" data-fatherr-cod="5" data-master-cod="8" value="9">Quatro 9</option>
+  <option data-father-cod="6" data-fatherr-cod="6" data-master-cod="5" value="10">Quatro 10</option>
+  <option data-father-cod="7" data-fatherr-cod="1" data-master-cod="2" value="11">Quatro 11</option>
+  <option data-father-cod="3" data-fatherr-cod="2" data-master-cod="9" value="12">Quatro 12</option>
+</select> -->
 <!-- 
 <p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
  -->
-<h3>
+<!-- <h3> -->
 <!-- <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
  -->
 <!-- <p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>

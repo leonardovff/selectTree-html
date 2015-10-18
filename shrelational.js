@@ -75,11 +75,14 @@
 					app.fathers[i].el.addEventListener('change',function(){
 						app._updateValueFather();
 						app.buildOptions();
+
+							console.log("entrou2");
 					},false);
 					app.fathers[i].el.addEventListener('DOMSubtreeModified',function(){
 						//EVENTO @DOMSubtreeModified É DISPARADO DUAS VEZES
 						//FLAG e SeTimeout PARA NÃO EXECUTAR DUAS VEZES
 						if(flag){ 
+							console.log("entrou");
 							flag = false;
 							setTimeout(function(){
 								app._updateValueFather();
