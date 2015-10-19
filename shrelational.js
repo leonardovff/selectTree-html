@@ -164,7 +164,7 @@
 		app.buildOptions();
 		if(!app.active) return 0;	
 		app.setEvents();
-		setTimeout(app.clearSelected, 1000); //CLEAR SELECTED OF LIST AFTER INIT PROGRAM
+		setTimeout(app.clearSelected, 500); //CLEAR SELECTED OF LIST AFTER INIT PROGRAM
 		console.dir(app);
 	});
 	var el = get.all(selectTreeSelector);
