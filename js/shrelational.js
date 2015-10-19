@@ -43,7 +43,6 @@
 				for (var i = fathers.length; i--;) {
 					app._getValueFather(fathers[i].id);
 				}
-				app._checkDisabled();
 			},
 			_checkDisabled: function(){
 				var disabled = false;
