@@ -51,7 +51,8 @@
 					if(app.fathers[i].value==="choose")
 						disabled = true;
 				}
-				app.disabled = disabled;
+				if(disabled) app.disabled = true
+				console.log(app.disabled);
 				if(app.disabled) return app.el.setAttribute("disabled","on");
 				app.el.removeAttribute("disabled");
 			},
@@ -80,11 +81,15 @@
 						string = app.list[i].html + string;
 				};
 				if(string===""){
+					app.disabled = true;
+					console.log("entrou")
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
 				} else {
+					app.disabled = false;
 					string = app.beforeOptions.html + string;
 				}
 				app.el.innerHTML = string;
+				app._checkDisabled();
 			},
 			statusSelect: function(){
 				var dataset = app.el.dataset;
