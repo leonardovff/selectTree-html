@@ -57,7 +57,7 @@
 			},
 			_filter: function(option){
 				for (var i = app.fathers.length; i--;) {
-					if(app.fathers[i].value!="all" || app.fathers[i].value!="choose"){
+					if(app.fathers[i].value!="all" && app.fathers[i].value!="choose"){
 						if(typeof(option[app.fathers[i].id])==="undefined") return false;
 						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
 						if(option[app.fathers[i].id].indexOf(app.fathers[i].value)===-1) return false; 
@@ -79,9 +79,11 @@
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
-				string = app.beforeOptions.html + string;
-				if(string==="") 
+				if(string===""){
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
+				} else {
+					string = app.beforeOptions.html + string;
+				}
 				app.el.innerHTML = string;
 			},
 			statusSelect: function(){
