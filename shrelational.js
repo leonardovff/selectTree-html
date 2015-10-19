@@ -72,6 +72,14 @@
 				} 
 				if(dataset.shrEmpty) app.empty = dataset.shrEmpty;
 			},
+			clearSelected: function(){
+				for (var i = app.list.length; i--;) {
+					if(app.list[i].html.indexOf('selected')) {
+						app.list[i].html = app.list[i].html.replace('selected="on"', "");
+						app.list[i].html = app.list[i].html.replace("selected", "");
+					}
+				}
+			},
 			setEvents: function(){
 				var flag = true;
 				for (var i = app.fathers.length; i--;) {
@@ -88,7 +96,7 @@
 								app._updateValueFather();
 								app.buildOptions();
 								flag = true;	
-							},100);
+							},20);
 						}
 					},false);
 				}
@@ -156,6 +164,7 @@
 		app.buildOptions();
 		if(!app.active) return 0;	
 		app.setEvents();
+		setTimeout(app.clearSelected, 1000); //CLEAR SELECTED OF LIST AFTER INIT PROGRAM
 		console.dir(app);
 	});
 	var el = get.all(selectTreeSelector);
