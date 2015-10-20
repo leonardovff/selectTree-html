@@ -5,7 +5,8 @@ Feature for html select element, with the parents/children concept. It will chan
 > **Author:** [Leonardo Victor](https://twitter.com/leonardovff)
 
 
-# htmlRelationalSelect
+#
+
 Feature de select html possuindo pais e filhos, alterando o seu conteúdo e dos filhos a depender das ações.
 
 [veja exemplo](http://leonardovff.github.io/htmlSelectTree/) - [wiki](https://github.com/leonardovff/htmlSelectTree/wiki)
