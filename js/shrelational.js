@@ -51,12 +51,24 @@
 						disabled = true;
 				}
 				if(disabled) app.disabled = true
-				console.log(app.disabled);
 				if(app.disabled) return app.el.setAttribute("disabled","on");
 				app.el.removeAttribute("disabled");
 			},
+			_filterAll: function(el, option){
+				var options = get.all('option',el);
+				for (var i = options.length; i--;) {
+					if(option){
+						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
+						if(option.indexOf(options[i].value)!==-1) return false; 
+					}
+				}
+				return true;
+			},
 			_filter: function(option){
 				for (var i = app.fathers.length; i--;) {
+					if(app.fathers[i].value==="all"){
+						if(app._filterAll(app.fathers[i].el, option[app.fathers[i].id])) return false;
+					}
 					if(app.fathers[i].value!="all" && app.fathers[i].value!="choose"){
 						if(typeof(option[app.fathers[i].id])==="undefined") return false;
 						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
@@ -81,7 +93,6 @@
 				};
 				if(string===""){
 					app.disabled = true;
-					console.log("entrou")
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
 				} else {
 					app.disabled = false;
