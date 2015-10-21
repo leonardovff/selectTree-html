@@ -21,6 +21,7 @@
 	selectTree = (function(el){
 		var app = {
 			active: false,
+			disabled: false,
 			list: [],
 			fathers: [],
 			el: {},
@@ -43,9 +44,32 @@
 					app._getValueFather(fathers[i].id);
 				}
 			},
+			_checkDisabled: function(){
+				var disabled = false;
+				for (var i = app.fathers.length; i--;) {
+					if(app.fathers[i].value==="choose")
+						disabled = true;
+				}
+				if(disabled) app.disabled = true
+				if(app.disabled) return app.el.setAttribute("disabled","on");
+				app.el.removeAttribute("disabled");
+			},
+			_filterAll: function(el, option){
+				var options = get.all('option',el);
+				for (var i = options.length; i--;) {
+					if(option){
+						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
+						if(option.indexOf(options[i].value)!==-1) return false; 
+					}
+				}
+				return true;
+			},
 			_filter: function(option){
 				for (var i = app.fathers.length; i--;) {
-					if(app.fathers[i].value!="all"){
+					if(app.fathers[i].value==="all"){
+						if(app._filterAll(app.fathers[i].el, option[app.fathers[i].id])) return false;
+					}
+					if(app.fathers[i].value!="all" && app.fathers[i].value!="choose"){
 						if(typeof(option[app.fathers[i].id])==="undefined") return false;
 						// CONFERIR LANCE DE COMPRAÇÂO DE STRING COM NUMBER DO INDEX OF
 						if(option[app.fathers[i].id].indexOf(app.fathers[i].value)===-1) return false; 
@@ -53,16 +77,29 @@
 				}
 				return true;
 			},
+			_clearSelected: function(){
+				for (var i = app.list.length; i--;) {
+					if(app.list[i].html.indexOf('selected')) {
+						app.list[i].html = app.list[i].html.replace('selected="on"', "");
+						app.list[i].html = app.list[i].html.replace("selected", "");
+					}
+				}
+			},
 			buildOptions: function(){
 				var string = "";
 				for (var i = app.list.length; i--;) {
 					if(app._filter(app.list[i])) 
 						string = app.list[i].html + string;
 				};
-				string = app.beforeOptions.html + string;
-				if(string==="") 
+				if(string===""){
+					app.disabled = true;
 					string = '<option disabled="on" value="" selected="on">'+app.empty+'</option>';
+				} else {
+					app.disabled = false;
+					string = app.beforeOptions.html + string;
+				}
 				app.el.innerHTML = string;
+				app._checkDisabled();
 			},
 			statusSelect: function(){
 				var dataset = app.el.dataset;
@@ -71,14 +108,7 @@
 					delete dataset['shrValue'];
 				} 
 				if(dataset.shrEmpty) app.empty = dataset.shrEmpty;
-			},
-			clearSelected: function(){
-				for (var i = app.list.length; i--;) {
-					if(app.list[i].html.indexOf('selected')) {
-						app.list[i].html = app.list[i].html.replace('selected="on"', "");
-						app.list[i].html = app.list[i].html.replace("selected", "");
-					}
-				}
+				app._checkDisabled();
 			},
 			setEvents: function(){
 				var flag = true;
@@ -100,6 +130,7 @@
 						}
 					},false);
 				}
+				setTimeout(app._clearSelected, 500); //CLEAR SELECTED OF LIST AFTER INIT PROGRAM
 			},
 			list: function(select){
 				var elOptions = get.all("option",select),
@@ -130,7 +161,7 @@
 							} else {
 								listTemp[key] = dataset[key].split(",");
 							}
-							delete dataset[key];
+							delete dataset[key];	
 							if(!app.active) app.active = true;
 							if(get.searchKey(app.fathers,'id',key)===null)
 								app._getValueFather(key);
@@ -145,7 +176,7 @@
 					} 
 					listTemp.html = elOptions[i].outerHTML;
 
-					if(val === "all"){
+					if(val === "all" || val === "choose" ){
 						app.beforeOptions = listTemp;
 					} else {
 						if(keySearch===null){
@@ -164,7 +195,6 @@
 		app.buildOptions();
 		if(!app.active) return 0;	
 		app.setEvents();
-		setTimeout(app.clearSelected, 500); //CLEAR SELECTED OF LIST AFTER INIT PROGRAM
 		console.dir(app);
 	});
 	var el = get.all(selectTreeSelector);
