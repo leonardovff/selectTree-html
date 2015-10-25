@@ -26,6 +26,7 @@
 			fathers: [],
 			el: {},
 			value: null,
+			unchangeable: false,
 			empty: "Sem itens para os pai(s) selecionados", // DEFAULT MESSAGE EMPTY
 			beforeOptions: "", //DEFAULT AFTER OPTION
 			_getValueFather: function(key){
@@ -50,7 +51,8 @@
 					if(app.fathers[i].value==="choose")
 						disabled = true;
 				}
-				if(disabled) app.disabled = true
+				if(disabled) app.disabled = true;
+				if(app.unchangeable) return true; 
 				if(app.disabled) return app.el.setAttribute("disabled","on");
 				app.el.removeAttribute("disabled");
 			},
@@ -107,6 +109,10 @@
 					app.value = dataset['shrValue'];
 					delete dataset['shrValue'];
 				} 
+				if(dataset.shrUnchangeable) {
+					app.unchangeable = true;
+					delete dataset.shrUnchangeable;
+				}
 				if(dataset.shrEmpty) app.empty = dataset.shrEmpty;
 				app._checkDisabled();
 			},
